@@ -64,6 +64,9 @@ class Petersen:
         plt.show()
 
 if __name__ == "__main__":
-    g = Petersen(10, 2)
+    n = int(input("Enter number of vertices: "))
+    m = int(input("Enter degree of each  vertex: "))
+
+    g = Petersen(n, m)
     print(g)
     g.draw()
