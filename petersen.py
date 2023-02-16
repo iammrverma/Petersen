@@ -3,9 +3,18 @@ import matplotlib.pyplot as plt
 
 class Petersen:
     def __init__(self, vertex_count, adjacent_count):
+        '''
+        Initializes the Petersen graph with a given number of vertices and a given degree for each vertex.
+
+        Args:
+        - vertex_count (int): The number of vertices in the graph.
+        - adjacent_count (int): The degree of each vertex in the graph (i.e., the number of adjacent vertices for each vertex).
+
+        Raises:
+        - ValueError: If the given adjacent_count is not between 1 and half of the given vertex_count.
+        '''
         if not (adjacent_count >= 1 and adjacent_count <= vertex_count//2):
             raise ValueError('Number of adjacent vertices must be between 1 and half of number of vertices')
-        print("Petersen graph initialized")
         
         self.vertex_count = vertex_count
         self.adjacent_count = adjacent_count
@@ -15,7 +24,7 @@ class Petersen:
     
     def get(self):
         '''
-        this function returns a dictionary with vertices as key and list of adjacent vertices as value but length of value list should be always equal to self.adjacent_count
+        Returns a dictionary with vertices as keys and a list of adjacent vertices as values, where the length of the value list is always equal to self.adjacent_count.
         '''
         for i in range(1, self.vertex_count+1):
             adj = [((i+j-1) % self.vertex_count)+1 for j in range(1, self.adjacent_count+1)]
@@ -24,7 +33,7 @@ class Petersen:
     
     def __str__(self):
         '''
-        this function returns the adjacency list as a string
+        Returns the adjacency list of the Petersen graph as a string.
         '''
         adj_str = ''
         for vertex, adj_list in self.adj_list.items():
@@ -33,7 +42,7 @@ class Petersen:
     
     def draw(self):
         '''
-        This function uses networkx and matplotlib to draw the Petersen graph.
+        Draws the Petersen graph using networkx and matplotlib.
         '''
         # Create a networkx graph
         G = nx.Graph()
@@ -62,9 +71,11 @@ class Petersen:
         plt.show()
 
 if __name__ == "__main__":
+    # Get user input for number of vertices and degree of each vertex
     n = int(input("Enter number of vertices: "))
-    m = int(input("Enter degree of each  vertex: "))
+    m = int(input("Enter degree of each vertex: "))
 
+    # Create and draw the Petersen graph
     g = Petersen(n, m)
     print(g)
     g.draw()
