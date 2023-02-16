@@ -1,8 +1,12 @@
+"""
+Author: Raj Verma
+Date: 16/02/2023
+"""
 import networkx as nx
 import matplotlib.pyplot as plt
 
 class Petersen:
-    def __init__(self, vertex_count, adjacent_count):
+    def __init__(self, vertex_count, abs_diff):
         '''
         Initializes the Petersen graph with a given number of vertices and a given degree for each vertex.
 
@@ -13,11 +17,11 @@ class Petersen:
         Raises:
         - ValueError: If the given adjacent_count is not between 1 and half of the given vertex_count.
         '''
-        if not (adjacent_count >= 1 and adjacent_count <= vertex_count//2):
+        if not (abs_diff >= 1 and abs_diff <= vertex_count//2):
             raise ValueError('Number of adjacent vertices must be between 1 and half of number of vertices')
         
         self.vertex_count = vertex_count
-        self.adjacent_count = adjacent_count
+        self.abs_diff = abs_diff
     
         self.adj_list = {}
         self.get()
@@ -27,9 +31,10 @@ class Petersen:
         Returns a dictionary with vertices as keys and a list of adjacent vertices as values, where the length of the value list is always equal to self.adjacent_count.
         '''
         for i in range(1, self.vertex_count+1):
-            adj = [((i+j-1) % self.vertex_count)+1 for j in range(1, self.adjacent_count+1)]
-            if len(adj) == self.adjacent_count:
-                self.adj_list[i] = adj
+            self.adj_list[i] = [
+                (i%self.vertex_count)+1,
+                ((i+self.abs_diff-1)%self.vertex_count)+1
+            ]
     
     def __str__(self):
         '''
