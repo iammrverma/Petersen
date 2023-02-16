@@ -10,8 +10,6 @@ class Petersen:
         self.vertex_count = vertex_count
         self.adjacent_count = adjacent_count
     
-        self.edges = []
-        self.vertices = []
         self.adj_list = {}
         self.get()
     
