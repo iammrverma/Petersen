@@ -7,7 +7,7 @@ To use this program, you will need Python 3.x and the following packages:
 ## matplotlib
 
 To install these packages, run the following command:
-pip install networkx matplotlib
+pip install networkx matplotlib.
 To run the program, run the following command:
 python petersen.py
 
