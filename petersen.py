@@ -1,8 +1,7 @@
 """
 Author: Raj Verma
-Date: 16/02/2023
-Branch: main
-Branch: adjacent_vertices
+Date: 17/02/2023
+Description: This program defines a class Petersen that represents the Petersen graph, which is a small, non-planar, symmetrically regular graph. It takes input from the user for the number of vertices and absolute difference between inner vertices, and then draws the graph using networkx and matplotlib.
 """
 import networkx as nx
 import matplotlib.pyplot as plt
