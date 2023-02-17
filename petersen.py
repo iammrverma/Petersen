@@ -45,7 +45,7 @@ class Petersen:
         for i in range(self.vertex_count):
             edges.append((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)]))
         for i in range(self.vertex_count):
-            edges.append((inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)]))
+            edges.append((inner_nodes[i], inner_nodes[(i+self.abs_diff) % len(inner_nodes)]))
 
         return edges
 
@@ -89,17 +89,6 @@ class Petersen:
         G.add_nodes_from(outer_nodes)
         G.add_nodes_from(inner_nodes)
         G.add_edges_from(self.edges)
-        # # G.add_edge_from()
-        # # Add edges between adjacent nodes in each circle
-        # for i in range(len(outer_nodes)):
-        #     G.add_edge(outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)])
-
-        # for i in range(len(inner_nodes)):
-        #     G.add_edge(inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)])
-
-        # # Add edges between corresponding nodes in both circles
-        # for i in range(len(outer_nodes)):
-        #     G.add_edge(outer_nodes[i], inner_nodes[i])
 
         # Compute the positions of the nodes in the graph using the spring layout algorithm
         outer_pos = nx.circular_layout(outer_nodes)
