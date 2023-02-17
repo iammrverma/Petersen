@@ -26,10 +26,30 @@ class Petersen:
         self.abs_diff = abs_diff
         self.outer_nodes = list(range(1, self.vertex_count+1))
         self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
-        self.edges = []
+        self.edges = self._calculate_edges()
 
         self.adj_list = {}
         self.get()
+    def _calculate_edges(self):
+        '''
+        Calculates the edges of the Petersen graph.
+        '''
+        outer_nodes = self.outer_nodes
+        inner_nodes = self.inner_nodes
+
+        edges = []
+        # Add edges between corresponding nodes in both circles
+        for i in range(self.vertex_count):
+            edges.append((outer_nodes[i], inner_nodes[i]))
+        # Add edges between adjacent nodes in each circle
+        for i in range(self.vertex_count):
+            edges.append((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)]))
+        for i in range(self.vertex_count):
+            edges.append((inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)]))
+
+        return edges
+
+
 
     def get(self):
         '''
@@ -68,17 +88,18 @@ class Petersen:
         # Add the nodes to the graph
         G.add_nodes_from(outer_nodes)
         G.add_nodes_from(inner_nodes)
-        # G.add_edge_from()
-        # Add edges between adjacent nodes in each circle
-        for i in range(len(outer_nodes)):
-            G.add_edge(outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)])
+        G.add_edges_from(self.edges)
+        # # G.add_edge_from()
+        # # Add edges between adjacent nodes in each circle
+        # for i in range(len(outer_nodes)):
+        #     G.add_edge(outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)])
 
-        for i in range(len(inner_nodes)):
-            G.add_edge(inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)])
+        # for i in range(len(inner_nodes)):
+        #     G.add_edge(inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)])
 
-        # Add edges between corresponding nodes in both circles
-        for i in range(len(outer_nodes)):
-            G.add_edge(outer_nodes[i], inner_nodes[i])
+        # # Add edges between corresponding nodes in both circles
+        # for i in range(len(outer_nodes)):
+        #     G.add_edge(outer_nodes[i], inner_nodes[i])
 
         # Compute the positions of the nodes in the graph using the spring layout algorithm
         outer_pos = nx.circular_layout(outer_nodes)
@@ -108,5 +129,5 @@ if __name__ == "__main__":
 
     # Create and draw the Petersen graph
     g = Petersen(n, m)
-    print(g)
+    print(g.edges)
     g.draw()
