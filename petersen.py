@@ -1,10 +1,11 @@
 """
 Author: Raj Verma
 Date: 16/02/2023
-Branch: Main
+Branch: main
 """
 import networkx as nx
 import matplotlib.pyplot as plt
+
 
 class Petersen:
     def __init__(self, vertex_count, abs_diff):
@@ -23,13 +24,16 @@ class Petersen:
         
         self.vertex_count = vertex_count
         self.abs_diff = abs_diff
-    
+        self.outer_nodes = list(range(1, self.vertex_count+1))
+        self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
+        self.edges = []
+
         self.adj_list = {}
         self.get()
-    
+
     def get(self):
         '''
-        Returns a dictionary with vertices as keys and a list of adjacent vertices as values, where the length of the value list is always equal to self.adjacent_count.
+        Returns a dictionary with vertices as keys and a list of adjacent vertices as values
         '''
         for i in range(1, self.vertex_count+1):
             self.adj_list[i] = [
@@ -50,36 +54,58 @@ class Petersen:
         '''
         Draws the Petersen graph using networkx and matplotlib.
         '''
-        # Create a networkx graph
-        G = nx.Graph()
-        G.add_nodes_from(self.adj_list.keys())
-        for vertex, adj_list in self.adj_list.items():
-            for adj_vertex in adj_list:
-                G.add_edge(vertex, adj_vertex)
-        
-        # Set the positions of the nodes in a circular layout
-        pos = nx.circular_layout(G)
+        outer_nodes = self.outer_nodes
+        inner_nodes = self.inner_nodes
 
-        # Draw the nodes and edges of the graph using matplotlib
-        nx.draw_networkx_nodes(G, pos, node_size=300, node_color='skyblue')
-        nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5, edge_color='gray')
-        
-        # Draw the labels of the nodes
+        # Reorder the inner nodes to follow the correct order
+        inner_nodes = inner_nodes[-1:] + inner_nodes[:-1]
+        # Reorder the outer nodes to follow the correct order
+        outer_nodes = outer_nodes[-1:] + outer_nodes[:-1]
+
+        # Initialize a graph object
+        G = nx.Graph()
+
+        # Add the nodes to the graph
+        G.add_nodes_from(outer_nodes)
+        G.add_nodes_from(inner_nodes)
+        # G.add_edge_from()
+        # Add edges between adjacent nodes in each circle
+        for i in range(len(outer_nodes)):
+            G.add_edge(outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)])
+
+        for i in range(len(inner_nodes)):
+            # G.add_edge(inner_nodes[i], inner_nodes[((i+self.abs_diff-1)%self.vertex_count)])
+            G.add_edge(inner_nodes[i], inner_nodes[(i+3) % len(inner_nodes)])
+
+        # Add edges between corresponding nodes in both circles
+        for i in range(len(outer_nodes)):
+            G.add_edge(outer_nodes[i], inner_nodes[i])
+
+        # Compute the positions of the nodes in the graph using the spring layout algorithm
+        outer_pos = nx.circular_layout(outer_nodes)
+        inner_pos = nx.circular_layout(inner_nodes)
+        for node in inner_nodes: # mmoving inner nodes slightly toward the center of circle
+            x, y = inner_pos[node]
+            inner_pos[node] = (x * 0.8, y * 0.8)
+            
+        pos = {**outer_pos, **inner_pos}
+
+        # Draw the nodes and edges
+        nx.draw_networkx_nodes(G, pos, nodelist=outer_nodes, node_color='r', node_size=300)
+        nx.draw_networkx_nodes(G, pos, nodelist=inner_nodes, node_color='b', node_size=200)
+        nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)
+
         labels = {vertex: str(vertex) for vertex in G.nodes()}
-        nx.draw_networkx_labels(G, pos, labels, font_size=12, font_color='white')
-        
-        # Set the axis limits and remove the axis labels
-        plt.xlim(-1.2, 1.2)
-        plt.ylim(-1.2, 1.2)
-        plt.axis('off')
+        nx.draw_networkx_labels(G, pos, labels, font_size=8, font_color='white')
 
         # Show the graph
+        plt.axis('off')
         plt.show()
 
 if __name__ == "__main__":
-    # Get user input for number of vertices and degree of each vertex
+    # Get user input for number of vertices and abdolute difference between inner vertices
     n = int(input("Enter number of vertices: "))
-    m = int(input("Enter degree of each vertex: "))
+    m = int(input("Enter abdolute difference between inner vertices: "))
 
     # Create and draw the Petersen graph
     g = Petersen(n, m)
