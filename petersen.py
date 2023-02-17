@@ -19,8 +19,10 @@ class Petersen:
         Raises:
         - ValueError: If the given adjacent_count is not between 1 and half of the given vertex_count.
         '''
+        if not isinstance(vertex_count, int) or not isinstance(abs_diff, int):
+            raise ValueError('Both arguments must be integers')        
         if not (abs_diff >= 1 and abs_diff <= vertex_count//2):
-            raise ValueError('Number of adjacent vertices must be between 1 and half of number of vertices')
+            raise ValueError('Absolute Diference must be between 1 and half of number of vertices')
         
         self.vertex_count = vertex_count
         self.abs_diff = abs_diff
@@ -91,7 +93,7 @@ class Petersen:
 if __name__ == "__main__":
     # Get user input for number of vertices and abdolute difference between inner vertices
     m = int(input("Enter number of vertices: "))
-    n = int(input("Enter degree of each vertex: "))
+    n = int(input("Enter absolute difference: "))
 
     # Create and draw the Petersen graph
     g = Petersen(m, n)
