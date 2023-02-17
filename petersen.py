@@ -2,6 +2,7 @@
 Author: Raj Verma
 Date: 16/02/2023
 Branch: main
+Branch: adjacent_vertices
 """
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -29,7 +30,27 @@ class Petersen:
         self.outer_nodes = list(range(1, self.vertex_count+1))
         self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
         self.edges = self._calculate_edges()
+        self.adjacent_vertices = self._calculate_adjacent_vertices()
+    def _calculate_adjacent_vertices(self):
+        '''
+        Calculates the adjacent vertices for each vertex in the graph.
 
+        Returns:
+        - adj_list (dict): A dictionary where each key is a vertex in the graph and the corresponding value is a list of adjacent vertices.
+        '''
+        adj_list = {}
+        for vertex in range(1, self.vertex_count+1):
+            adjacent_vertices = []
+            for edge in self.edges:
+                if vertex in edge:
+                    other_vertex = edge[0] if edge[1] == vertex else edge[1]
+                    adjacent_vertices.append(other_vertex)
+            adj_list[vertex] = adjacent_vertices
+        return adj_list
+    
+    def print_adj_vertices(self):
+        for vertex, adj_vertices in self.adjacent_vertices.items():
+            print(f"{vertex}: {', '.join(str(v) for v in adj_vertices)}")
     def _calculate_edges(self):
         '''
         Calculates the edges of the Petersen graph.
@@ -97,4 +118,6 @@ if __name__ == "__main__":
 
     # Create and draw the Petersen graph
     g = Petersen(m, n)
+    print(g.adjacent_vertices)
+    g.print_adj_vertices()
     g.draw()
