@@ -28,8 +28,6 @@ class Petersen:
         self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
         self.edges = self._calculate_edges()
 
-        self.adj_list = {}
-        self.get()
     def _calculate_edges(self):
         '''
         Calculates the edges of the Petersen graph.
@@ -48,27 +46,6 @@ class Petersen:
             edges.append((inner_nodes[i], inner_nodes[(i+self.abs_diff) % len(inner_nodes)]))
 
         return edges
-
-
-
-    def get(self):
-        '''
-        Returns a dictionary with vertices as keys and a list of adjacent vertices as values
-        '''
-        for i in range(1, self.vertex_count+1):
-            self.adj_list[i] = [
-                (i%self.vertex_count)+1,
-                ((i+self.abs_diff-1)%self.vertex_count)+1
-            ]
-    
-    def __str__(self):
-        '''
-        Returns the adjacency list of the Petersen graph as a string.
-        '''
-        adj_str = ''
-        for vertex, adj_list in self.adj_list.items():
-            adj_str += f'{vertex}: {adj_list}\n'
-        return adj_str
     
     def draw(self):
         '''
@@ -113,10 +90,9 @@ class Petersen:
 
 if __name__ == "__main__":
     # Get user input for number of vertices and abdolute difference between inner vertices
-    n = int(input("Enter number of vertices: "))
-    m = int(input("Enter abdolute difference between inner vertices: "))
+    m = int(input("Enter number of vertices: "))
+    n = int(input("Enter degree of each vertex: "))
 
     # Create and draw the Petersen graph
-    g = Petersen(n, m)
-    print(g.edges)
+    g = Petersen(m, n)
     g.draw()
