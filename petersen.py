@@ -65,8 +65,8 @@ class Petersen:
 
         edges = []
         # Add edges between corresponding nodes in both circles
-        for i in range(self.vertex_count):
-            edges.append((outer_nodes[i], inner_nodes[i]))
+        for u, v in zip(outer_nodes, inner_nodes):
+            edges.append((u, v))
         # Add edges between adjacent nodes in each circle
         for i in range(self.vertex_count):
             edges.append((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)]))
@@ -117,7 +117,7 @@ class Petersen:
         plt.show()
 
 if __name__ == "__main__":
-    # Get user input for number of vertices and abdolute difference between inner vertices
+    # Get user input for number of vertices and absolute difference between inner vertices
     m = int(input("Enter number of vertices: "))
     n = int(input("Enter absolute difference: "))
 
