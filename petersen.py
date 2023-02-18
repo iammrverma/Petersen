@@ -114,6 +114,7 @@ class Petersen:
 
         # Show the graph
         plt.axis('off')
+        plt.title(f"Petersen({self.vertex_count}, {self.abs_diff})")
         plt.show()
 
 if __name__ == "__main__":
@@ -123,6 +124,5 @@ if __name__ == "__main__":
 
     # Create and draw the Petersen graph
     g = Petersen(m, n)
-    print(g.adjacent_vertices)
     g.print_adj_vertices()
     g.draw()
