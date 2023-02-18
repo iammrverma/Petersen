@@ -10,14 +10,14 @@ import matplotlib.pyplot as plt
 class Petersen:
     def __init__(self, vertex_count, abs_diff):
         '''
-        Initializes the Petersen graph with a given number of vertices and a given degree for each vertex.
+        Initializes the Petersen graph with a given number of vertices and absolute difference between adjacent vertices.
 
         Args:
         - vertex_count (int): The number of vertices in the graph.
-        - adjacent_count (int): The degree of each vertex in the graph (i.e., the number of adjacent vertices for each vertex).
+        - abs_diff (int): The absolute difference between adjacent vertices.
 
         Raises:
-        - ValueError: If the given adjacent_count is not between 1 and half of the given vertex_count.
+        - ValueError: If vertex_count or abs_diff is not an integer, or if abs_diff is not between 1 and half of vertex_count.
         '''
         if not isinstance(vertex_count, int) or not isinstance(abs_diff, int):
             raise ValueError('Both arguments must be integers')        
@@ -48,11 +48,17 @@ class Petersen:
         return adj_list
     
     def print_adj_vertices(self):
+        '''
+        Prints the adjacent vertices for each vertex in the graph.
+        '''       
         for vertex, adj_vertices in self.adjacent_vertices.items():
             print(f"{vertex}: {', '.join(str(v) for v in adj_vertices)}")
     def _calculate_edges(self):
         '''
         Calculates the edges of the Petersen graph.
+
+        Returns:
+        - edges (list): A list of tuples, where each tuple represents an edge in the graph.
         '''
         outer_nodes = self.outer_nodes
         inner_nodes = self.inner_nodes
