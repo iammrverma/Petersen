@@ -30,6 +30,7 @@ class Petersen:
         self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
         self.edges = self._calculate_edges()
         self.adjacent_vertices = self._calculate_adjacent_vertices()
+
     def _calculate_adjacent_vertices(self):
         '''
         Calculates the adjacent vertices for each vertex in the graph.
@@ -53,6 +54,7 @@ class Petersen:
         '''       
         for vertex, adj_vertices in self.adjacent_vertices.items():
             print(f"{vertex}: {', '.join(str(v) for v in adj_vertices)}")
+
     def _calculate_edges(self):
         '''
         Calculates the edges of the Petersen graph.
