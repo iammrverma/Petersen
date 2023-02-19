@@ -81,13 +81,8 @@ class Petersen:
         '''
         Draws the Petersen graph using networkx and matplotlib.
         '''
-        outer_nodes = self.outer_nodes
-        inner_nodes = self.inner_nodes
-
-        # Reorder the inner nodes to follow the correct order
-        inner_nodes = inner_nodes[-1:] + inner_nodes[:-1]
-        # Reorder the outer nodes to follow the correct order
-        outer_nodes = outer_nodes[-1:] + outer_nodes[:-1]
+        outer_nodes = self.outer_nodes[::-1] # Reorder the outer_nodes to make them clcokwise
+        inner_nodes = self.inner_nodes[::-1] # Reorder the inner_nodes to make them clcokwise
 
         # Initialize a graph object
         G = nx.Graph()
