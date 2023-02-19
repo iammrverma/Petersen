@@ -67,13 +67,16 @@ class Petersen:
 
         edges = []
         # Add edges between corresponding nodes in both circles
-        for u, v in zip(outer_nodes, inner_nodes):
-            edges.append((u, v))
+        for i in range(self.vertex_count):
+            print((outer_nodes[i] , inner_nodes[i], 4*self.vertex_count-2*i-1))
+            edges.append((outer_nodes[i] , inner_nodes[i], 1))
         # Add edges between adjacent nodes in each circle
         for i in range(self.vertex_count):
-            edges.append((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)]))
+            print((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)], 4*self.vertex_count+2*i-1))
+            edges.append((outer_nodes[i], outer_nodes[(i+1) % len(outer_nodes)], 1))
         for i in range(self.vertex_count):
-            edges.append((inner_nodes[i], inner_nodes[(i+self.abs_diff) % len(inner_nodes)]))
+            print((inner_nodes[i], inner_nodes[(i+self.abs_diff) % len(inner_nodes)], 2*i-1))
+            edges.append((inner_nodes[i], inner_nodes[(i+self.abs_diff) % len(inner_nodes)], 1))
 
         return edges
     
@@ -95,7 +98,7 @@ class Petersen:
         # Add the nodes to the graph
         G.add_nodes_from(outer_nodes)
         G.add_nodes_from(inner_nodes)
-        G.add_edges_from(self.edges)
+        G.add_weighted_edges_from(self.edges) # g.add_weighted_edges
 
         # Compute the positions of the nodes in the graph using the spring layout algorithm
         outer_pos = nx.circular_layout(outer_nodes)
@@ -106,13 +109,17 @@ class Petersen:
             
         pos = {**outer_pos, **inner_pos}
 
+        edge_weights = [edge[2] for edge in self.edges]
         # Draw the nodes and edges
         nx.draw_networkx_nodes(G, pos, nodelist=outer_nodes, node_color='r', node_size=300)
         nx.draw_networkx_nodes(G, pos, nodelist=inner_nodes, node_color='b', node_size=200)
         nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)
 
         labels = {vertex: str(vertex) for vertex in G.nodes()}
+        edge_labels = {(edge[0], edge[1]): edge[2] for edge in self.edges}
+
         nx.draw_networkx_labels(G, pos, labels, font_size=8, font_color='white')
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
 
         # Show the graph
         plt.axis('off')
@@ -126,5 +133,5 @@ if __name__ == "__main__":
 
     # Create and draw the Petersen graph
     g = Petersen(m, n)
-    g.print_adj_vertices()
+    
     g.draw()
