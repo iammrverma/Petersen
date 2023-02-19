@@ -60,7 +60,7 @@ class Petersen:
         Calculates the edges of the Petersen graph.
 
         Returns:
-        - edges (list): A list of tuples, where each tuple represents an edge in the graph.
+        - edges (list): A list of tuples, where each tuple represents an edge(a, b, w) in the graph. where a, b are vertices and w is weight
         '''
         outer_nodes = self.outer_nodes
         inner_nodes = self.inner_nodes
