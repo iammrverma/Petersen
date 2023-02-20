@@ -97,7 +97,7 @@ class Petersen:
         inner_pos = nx.circular_layout(inner_nodes)
         for node in inner_nodes: # moving inner nodes slightly toward the center of circle
             x, y = inner_pos[node]
-            inner_pos[node] = (x * 0.6, y * 0.6)
+            inner_pos[node] = (x * 0.7, y * 0.7)
             
         pos = {**outer_pos, **inner_pos}
 
