@@ -69,7 +69,7 @@ class Petersen:
         # Add weighted edges
         for i in range(1, self.vertex_count+1):
             # between outer node and inner node
-            inner_x_outer_weight = 6*self.vertex_count-2*(i%self.vertex_count)
+            inner_x_outer_weight = 6*self.vertex_count-2*i+1
             edges.append((outer_nodes[i%self.vertex_count] , inner_nodes[i%self.vertex_count], inner_x_outer_weight))
             
             # between adjacent nodes in outer circle
