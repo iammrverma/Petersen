@@ -77,7 +77,11 @@ class Petersen:
             edges.append((outer_nodes[i-1], outer_nodes[i % self.vertex_count], outer_weight))
             
             # between adjacent nodes in outer circle
-            inner_weight = 0
+            inner_weight = 2*i-1
+            if i == self.vertex_count:
+                inner_weight = 2*(self.vertex_count-self.abs_diff)+1
+            if i == self.vertex_count-self.abs_diff+1:
+                inner_weight = 2*self.vertex_count-1
             edges.append((inner_nodes[i-1], inner_nodes[(i-1+self.abs_diff) % self.vertex_count], inner_weight))
 
         return edges
