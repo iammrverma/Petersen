@@ -28,8 +28,8 @@ class Petersen:
         
         self.vertex_count = vertex_count
         self.abs_diff = abs_diff
-        self.outer_nodes = list(range(1, self.vertex_count+1))
-        self.inner_nodes = list(range(self.vertex_count+1, 2*self.vertex_count+1))
+        self.outer_nodes = [f"V{i}" for i in range(1, self.vertex_count+1)]
+        self.inner_nodes = [f"U{i}" for i in range(1, self.vertex_count+1)]
         self.edges = self._calculate_edges()
         self.adjacent_vertices = self._calculate_adjacent_vertices()
 
@@ -127,6 +127,7 @@ class Petersen:
         # Show the graph
         plt.axis('off')
         plt.title(f"Petersen({self.vertex_count}, {self.abs_diff})")
+
         plt.show()
 
 if __name__ == "__main__":
