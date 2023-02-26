@@ -20,7 +20,9 @@ class Petersen:
         - ValueError: If vertex_count or abs_diff is not an integer, or if abs_diff is not between 1 and half of vertex_count.
         '''
         if not isinstance(vertex_count, int) or not isinstance(abs_diff, int):
-            raise ValueError('Both arguments must be integers')        
+            raise ValueError('Both arguments must be integers')  
+        if not vertex_count >= 5:
+            raise ValueError('Number of vertices must be greater than or equal to 5')
         if not (abs_diff >= 1 and abs_diff <= vertex_count//2):
             raise ValueError('Absolute Diference must be between 1 and half of number of vertices')
         
