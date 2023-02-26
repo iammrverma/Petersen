@@ -66,14 +66,19 @@ class Petersen:
         inner_nodes = self.inner_nodes
 
         edges = []
-        # Add edges between corresponding nodes in both circles
+        # Add weighted edges
         for i in range(1, self.vertex_count+1):
-            edges.append((outer_nodes[i%self.vertex_count] , inner_nodes[i%self.vertex_count], 4*self.vertex_count-2*i+1))
-        # Add edges between adjacent nodes in each circle
-        for i in range(1, self.vertex_count+1):
-            edges.append((outer_nodes[i-1], outer_nodes[i % len(outer_nodes)], 4*self.vertex_count+2*i-1))
-        for i in range(1, self.vertex_count+1):
-            edges.append((inner_nodes[i-1], inner_nodes[(i-1+self.abs_diff) % len(inner_nodes)], 2*i-1))
+            # between outer node and inner node
+            inner_x_outer_weight = 6*self.vertex_count-2*(i%self.vertex_count)
+            edges.append((outer_nodes[i%self.vertex_count] , inner_nodes[i%self.vertex_count], inner_x_outer_weight))
+            
+            # between adjacent nodes in outer circle
+            outer_weight = 2*self.vertex_count+2*i-1
+            edges.append((outer_nodes[i-1], outer_nodes[i % self.vertex_count], outer_weight))
+            
+            # between adjacent nodes in outer circle
+            inner_weight = 0
+            edges.append((inner_nodes[i-1], inner_nodes[(i-1+self.abs_diff) % self.vertex_count], inner_weight))
 
         return edges
     
