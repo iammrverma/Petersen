@@ -112,7 +112,13 @@ class Petersen:
             
         pos = {**outer_pos, **inner_pos}
 
-        edge_weights = [edge[2] for edge in self.edges]
+        # Calculate the total edge weight for each node
+        node_weights = {}
+        for node in G.nodes():
+            edges = G.edges(node, data=True)
+            weight_sum = sum(edge[2]['weight'] for edge in edges)
+            node_weights[node] = weight_sum%(6*self.vertex_count)
+
         # Draw the nodes and edges
         nx.draw_networkx_nodes(G, pos, nodelist=outer_nodes, node_color='r', node_size=300)
         nx.draw_networkx_nodes(G, pos, nodelist=inner_nodes, node_color='b', node_size=200)
@@ -120,6 +126,12 @@ class Petersen:
 
         labels = {vertex: str(vertex) for vertex in G.nodes()}
         edge_labels = {(edge[0], edge[1]): edge[2] for edge in self.edges}
+
+        # Draw the node weights
+        for node in G.nodes():
+            x, y = pos[node]
+            weight = node_weights[node]
+            plt.text(x+0.1, y, weight, fontsize=8)
 
         nx.draw_networkx_labels(G, pos, labels, font_size=8, font_color='white')
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
