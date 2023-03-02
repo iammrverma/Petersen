@@ -131,7 +131,7 @@ class Petersen:
         for node in G.nodes():
             x, y = pos[node]
             weight = node_weights[node]
-            plt.text(x+0.1, y, weight, fontsize=8)
+            plt.text(x+0.05, y, weight, fontsize=8)
 
         nx.draw_networkx_labels(G, pos, labels, font_size=8, font_color='white')
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
