@@ -5,7 +5,11 @@ Description: This program defines a class Petersen that represents the Petersen 
 """
 import networkx as nx
 import matplotlib.pyplot as plt
+import matplotlib
 
+# ploting the graph in full screen
+manager = plt.get_current_fig_manager()
+manager.resize(*manager.window.maxsize())
 
 class Petersen:
     def __init__(self, vertex_count, abs_diff):
@@ -149,5 +153,5 @@ if __name__ == "__main__":
 
     # Create and draw the Petersen graph
     g = Petersen(m, n)
-    
+
     g.draw()
